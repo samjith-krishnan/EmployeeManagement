@@ -1,0 +1,23 @@
+<form method="POST">
+    {% csrf_token %}
+    <label for="form_name">Form Name:</label>
+    <input type="text" id="form_name" name="form_name" required>
+    
+    <div id="dynamic-fields">
+        <!-- The fields will be dynamically added here -->
+        <div>
+            <label for="label_1">Label:</label>
+            <input type="text" name="label_1" id="label_1" required>
+            <label for="field_type_1">Field Type:</label>
+            <select name="field_type_1" id="field_type_1" required>
+                <option value="text">Text</option>
+                <option value="number">Number</option>
+                <option value="date">Date</option>
+                <option value="password">Password</option>
+            </select>
+        </div>
+        <!-- Add more fields dynamically if needed -->
+    </div>
+    
+    <button type="submit">Create Form</button>
+</form>

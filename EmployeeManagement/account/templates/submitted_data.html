@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" 
+        crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Responses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+          
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #ddd;
+        }
+        .btn-group a {
+            margin-left: 5px;
+        }
+        .btn {
+            padding: 8px 15px;
+            font-size: 14px;
+            border-radius: 15px;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            font-size: 14px;
+        }
+        .btn-edit {
+            text-decoration: none;
+            background-color: #ffc107;
+            color: white;
+            border: none;
+            font-size: 14px;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <ul class="nav justify-content-center" style="background-color: #e4e6ea; color: black; font-weight: bolder;">
+        <li class="nav-item">
+          <a style="color: black;" class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a style="color: black;" class="nav-link" href="{% url 'create_form' %}">Create form</a>
+        </li>
+        <li class="nav-item">
+          <a style="color: black;" class="nav-link" href="{%url 'account'%}">Account</a>
+        </li>
+
+        <li class="nav-item">
+            <a style="color: black;" class="nav-link" href="{%url 'logout'%}">Logout</a>
+          </li>
+       
+      </ul>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                {% for label in results.0 %}
+                    {% if label != "id" %}
+                        <th>{{ label }}</th>
+                    {% endif %}
+                {% endfor %}
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+                <tr>
+                    <td>{{ result.id }}</td>
+                    {% for key, value in result.items %}
+                        {% if key != "id" %}
+                            <td>{{ value }}</td>
+                        {% endif %}
+                    {% endfor %}
+                    <td>
+                        <form method="post" action="{% url 'deletedata' id=result.id form_id=form_id %}">
+                            {% csrf_token %}
+                            <div class="btn-group">
+                                <form method="post" action="{% url 'deletedata' id=result.id form_id=form_id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button class="btn btn-delete" type="submit">Delete</button>
+                                </form>
+                                <a href="{% url 'update_field' unique_id=result.id form_id=form_id %}" class="btn btn-edit">Edit</a>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Form List</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.3.2 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" 
+        crossorigin="anonymous"></script>
+
+    <!-- Custom Styling -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+        }
+        h3 {
+            font-size: 1.8rem;
+            color: #007bff;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            transition: all 0.3s ease-in-out;
+            border-radius: 10px;
+        }
+        .card:hover {
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+        .btn {
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: 1px solid #4CAF50; /* Border added */
+            background-color: white; /* Background set to white */
+            color: #4CAF50; /* Text color set to green */
+            transition: all 0.3s ease-in-out; /* Smooth transition for hover effect */
+        }
+        .btn:hover {
+            background-color: #4CAF50; /* Background color changes on hover */
+            color: white; /* Text color changes to white on hover */
+            transform: translateY(-3px); /* Slightly raises the button on hover */
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: 1px solid #007bff;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: translateY(-3px);
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: 1px solid #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #495057;
+            border-color: #495057;
+            transform: translateY(-3px);
+        }
+        .no-forms {
+            color: #888;
+            font-size: 1.2rem;
+        }
+        .d-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .col-md-6 {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="nav justify-content-center" style="background-color: #e4e6ea; color: black; font-weight: bolder;">
+        <li class="nav-item">
+          <a style="color: black;" class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a style="color: black;" class="nav-link" href="{% url 'create_form' %}">Create form</a>
+        </li>
+        <li class="nav-item">
+          <a style="color: black;" class="nav-link" href="{%url 'account'%}">Account</a>
+        </li>
+
+        <li class="nav-item">
+            <a style="color: black;" class="nav-link" href="{%url 'logout'%}">Logout</a>
+          </li>
+       
+      </ul>
+   
+    <div class="container">
+        <h3 class="text-center mb-4">Forms Created</h3>
+
+        <div class="d-grid">
+            {% if item|length == 0 %}
+            <h6 class="no-forms text-center">No forms created</h6>
+            {% else %}
+            {% for i in item %}
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ i.name }}</h5>
+                    <div class="d-flex justify-content-between mt-3">
+                        <a href="{% url 'view_dynamic_form' i.id %}" class="btn btn-primary">Add Data</a>
+                        <a href="{% url 'form_responses' i.id %}" class="btn btn-secondary">View Data</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>
